@@ -4,23 +4,20 @@ import ScanScreen from './components/ScanScreen'
 import ResultsScreen from './components/ResultsScreen'
 import { PROFILES, generateFallback } from './data/profiles'
 
-// Scan takes ~4.5s to feel real
-const SCAN_DURATION = 4600
+// Scan animation runs for ~5s — AI calls happen in parallel in ResultsScreen tabs
+const SCAN_DURATION = 5200
 
 export default function App() {
-  const [phase, setPhase] = useState('landing') // landing | scanning | results
+  const [phase, setPhase] = useState('landing')
   const [email, setEmail] = useState('')
   const [data, setData] = useState(null)
 
   function handleScan(inputEmail) {
     setEmail(inputEmail)
     setPhase('scanning')
-
-    setTimeout(() => {
-      const result = PROFILES[inputEmail] || generateFallback(inputEmail)
-      setData(result)
-      setPhase('results')
-    }, SCAN_DURATION)
+    const result = PROFILES[inputEmail] || generateFallback(inputEmail)
+    setData(result)
+    setTimeout(() => setPhase('results'), SCAN_DURATION)
   }
 
   function handleReset() {

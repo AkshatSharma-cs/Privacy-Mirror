@@ -1,0 +1,62 @@
+.wrap { display: flex; flex-direction: column; gap: 12px; }
+
+.inputRow { display: flex; gap: 10px; }
+
+.input {
+  flex: 1; background: var(--bg2); border: 1px solid var(--border2); border-radius: 3px;
+  padding: 12px 16px; font-family: var(--mono); font-size: 13px; color: var(--white);
+  outline: none; transition: border-color 0.2s; caret-color: var(--green);
+}
+.input:focus { border-color: rgba(0,230,118,0.3); }
+.input::placeholder { color: var(--text-dim); }
+
+.btn {
+  background: var(--surface2); border: 1px solid var(--border2); border-radius: 3px;
+  padding: 12px 20px; font-family: var(--mono); font-size: 12px; color: var(--text);
+  cursor: pointer; white-space: nowrap; transition: all 0.15s; letter-spacing: 0.05em;
+}
+.btn:hover:not(:disabled) { border-color: var(--cyan); color: var(--cyan); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.examples {
+  font-family: var(--mono); font-size: 10px; color: var(--text-dim);
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+}
+.examples span {
+  color: var(--cyan); cursor: pointer; text-decoration: underline;
+  text-decoration-color: rgba(0,188,212,0.3);
+}
+.examples span:hover { text-decoration-color: var(--cyan); }
+
+.loading {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 12px; color: var(--text-dim);
+}
+.loadingDot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: blink 0.8s step-end infinite; }
+
+.error { font-family: var(--mono); font-size: 12px; color: var(--red); }
+
+.result { animation: fadeUp 0.3s ease forwards; display: flex; flex-direction: column; gap: 14px; }
+
+.verdict {
+  display: flex; align-items: flex-start; gap: 20px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-left: 3px solid; border-radius: 3px; padding: 16px 18px;
+}
+
+.verdictScore {
+  font-family: var(--cond); font-size: 42px; font-weight: 900;
+  line-height: 1; flex-shrink: 0;
+}
+.verdictSlash { font-size: 16px; color: var(--text-dim); }
+
+.verdictLabel { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+.impersonating { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-bottom: 4px; }
+.impersonating strong { color: var(--text); }
+.recommendation { font-family: var(--mono); font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+
+.indicators { display: flex; flex-direction: column; gap: 6px; }
+.indicatorsLabel { font-family: var(--mono); font-size: 9px; color: var(--text-dim); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px; }
+.indicator { display: flex; gap: 10px; font-family: var(--mono); font-size: 12px; align-items: baseline; }
+.indicatorFlag { flex-shrink: 0; font-weight: 700; }
+.indicatorDetail { color: var(--text-dim); line-height: 1.6; }

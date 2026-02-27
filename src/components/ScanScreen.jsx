@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react'
 import styles from './ScanScreen.module.css'
 
 const STEPS = [
-  { text: 'Initialising scan engine...',           ms: 0    },
-  { text: 'Querying HaveIBeenPwned database...',   ms: 550  },
-  { text: 'Cross-referencing 200+ data brokers...', ms: 1150 },
-  { text: 'Scanning dark web marketplaces...',      ms: 1800 },
-  { text: 'Running AI profile inference...',        ms: 2500 },
-  { text: 'Calculating Creepy Score...',            ms: 3150 },
-  { text: 'Building remediation plan...',           ms: 3700 },
-  { text: 'Scan complete.',                         ms: 4200 },
+  { text: 'Initialising scan engine...',              ms: 0    },
+  { text: 'Querying breach databases...',             ms: 550  },
+  { text: 'Cross-referencing 200+ data brokers...',  ms: 1150 },
+  { text: 'Scanning dark web marketplaces...',        ms: 1800 },
+  { text: 'Running AMD MI300X AI inference...',       ms: 2500 },
+  { text: 'Generating personality profile...',        ms: 3150 },
+  { text: 'Calculating threat intelligence...',       ms: 3700 },
+  { text: 'Building remediation plan...',             ms: 4300 },
+  { text: 'Scan complete.',                           ms: 4800 },
 ]
 
 export default function ScanScreen({ email }) {
@@ -40,7 +41,6 @@ export default function ScanScreen({ email }) {
           <div
             key={i}
             className={`${styles.line} ${i <= active ? styles.lineVisible : ''} ${i === active ? styles.lineActive : ''}`}
-            style={{ transitionDelay: `${i * 0.04}s` }}
           >
             <span className={styles.prompt}>{'>'}</span>
             <span className={styles.lineText}>{step.text}</span>
