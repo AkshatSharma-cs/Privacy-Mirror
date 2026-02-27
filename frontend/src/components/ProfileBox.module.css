@@ -1,0 +1,38 @@
+.box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--orange);
+  border-radius: 4px;
+  padding: 22px 26px;
+  position: relative;
+  margin-bottom: 8px;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+
+.badge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--orange);
+  letter-spacing: 0.18em;
+  opacity: 0.75;
+}
+
+.text {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.95;
+  color: var(--text);
+}
+
+.cursor {
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  background: var(--orange);
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: blink 0.9s step-end infinite;
+}

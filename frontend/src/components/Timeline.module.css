@@ -1,0 +1,222 @@
+.wrap {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 28px 32px 20px;
+  margin-bottom: 8px;
+  animation: fadeUp 0.5s ease 0.15s both;
+}
+
+.yearRange {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.yearLine {
+  flex: 1;
+  height: 1px;
+  background: var(--border2);
+}
+
+/* Timeline track */
+.track {
+  position: relative;
+  height: 60px;
+  margin: 0 12px 36px;
+}
+
+/* Baseline */
+.track::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 20px;
+  height: 1px;
+  background: var(--border2);
+}
+
+/* Year markers */
+.yearMark {
+  position: absolute;
+  top: 14px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.yearTick {
+  width: 1px;
+  height: 12px;
+  background: var(--border2);
+}
+
+.yearLabel {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* Event nodes */
+.event {
+  position: absolute;
+  top: 10px;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: fadeIn 0.4s ease both;
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--text-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.dot:hover {
+  transform: scale(1.3);
+}
+
+.dotInner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Popup card */
+.popup {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-top: 2px solid;
+  border-radius: 4px;
+  padding: 12px 14px;
+  z-index: 20;
+  animation: fadeUp 0.2s ease forwards;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* Ensure popup on last items doesn't go off-screen */
+.event:last-child .popup,
+.event:nth-last-child(2) .popup {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.popupYear {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-bottom: 3px;
+}
+
+.popupEvent {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.popupDetail {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.popupBadge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  border: 1px solid;
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+/* Now marker */
+.nowMark {
+  position: absolute;
+  top: 10px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.nowDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  animation: pulse-red 2s ease infinite;
+}
+
+.nowLabel {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendLabel {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+.hint {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  opacity: 0.5;
+  margin-top: 8px;
+}

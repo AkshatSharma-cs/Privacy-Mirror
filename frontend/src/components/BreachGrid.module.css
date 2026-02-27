@@ -1,0 +1,80 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--red);
+  border-radius: 3px;
+  padding: 14px 16px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+  gap: 8px;
+}
+
+.name {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.severity {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  background: rgba(255,45,85,0.08);
+  color: var(--text-dim);
+  border: 1px solid rgba(255,45,85,0.15);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.clean {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  background: var(--green-dim);
+  border: 1px solid rgba(0,230,118,0.15);
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.cleanIcon {
+  font-size: 16px;
+}

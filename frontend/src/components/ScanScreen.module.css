@@ -1,0 +1,136 @@
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 24px;
+  position: relative;
+}
+
+/* Animated sweep line */
+.sweepLine {
+  position: fixed;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--green) 40%, var(--cyan) 60%, transparent 100%);
+  opacity: 0.6;
+  animation: scan-sweep 2s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.target {
+  font-family: var(--mono);
+  font-size: 18px;
+  color: var(--green);
+  letter-spacing: 0.05em;
+}
+
+.terminal {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 2.2;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lineVisible {
+  opacity: 0.4;
+  transform: translateX(0);
+}
+
+.lineActive {
+  opacity: 1;
+}
+
+.prompt {
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.lineText {
+  color: var(--text);
+}
+
+.lineActive .lineText {
+  color: var(--white);
+}
+
+.cursor {
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  background: var(--green);
+  margin-left: 4px;
+  animation: blink 0.9s step-end infinite;
+  flex-shrink: 0;
+}
+
+.ok {
+  color: var(--green);
+  font-size: 11px;
+  margin-left: auto;
+  opacity: 0.6;
+}
+
+.done {
+  color: var(--green);
+  font-size: 13px;
+  margin-left: auto;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Progress bar */
+.progressWrap {
+  width: 100%;
+  max-width: 520px;
+  height: 2px;
+  background: var(--border2);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--cyan));
+  border-radius: 1px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(0,230,118,0.5);
+}
+
+.progressLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 8px;
+  letter-spacing: 0.1em;
+}
