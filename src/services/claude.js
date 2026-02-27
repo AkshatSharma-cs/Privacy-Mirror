@@ -1,7 +1,7 @@
-const MODEL = 'claude-sonnet-4-6'
+const MODEL = 'llama-3.3-70b-versatile'
 
-async function claudeCall(prompt, maxTokens = 600) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+async function groqCall(prompt, maxTokens = 600) {
+  const res = await fetch('http://localhost:3001/api/claude', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -11,7 +11,7 @@ async function claudeCall(prompt, maxTokens = 600) {
     })
   })
   const json = await res.json()
-  const text = json.content?.[0]?.text || ''
+  const text = json.choices?.[0]?.message?.content || ''
   return text.replace(/```json|```/g, '').trim()
 }
 
@@ -36,7 +36,7 @@ Write a 3-sentence AI personality/demographic inference paragraph. Rules:
 - Do NOT mention being an AI or that this is simulated
 - Plain text only, no formatting, no quotes around the paragraph`
 
-  return claudeCall(prompt, 300)
+  return groqCall(prompt, 300)
 }
 
 // ── Password Strength Analyser ───────────────────────────────────────────────
@@ -56,7 +56,7 @@ Return ONLY a JSON object, no markdown:
   "pwnedLikely": <true if this looks like a commonly used password pattern>
 }`
 
-  const raw = await claudeCall(prompt, 400)
+  const raw = await groqCall(prompt, 400)
   try { return JSON.parse(raw) } catch { return null }
 }
 
@@ -78,11 +78,11 @@ Return ONLY a JSON object, no markdown:
   "recommendation": <one sentence action to take>
 }
 
-Analyse for: typosquatting, homograph attacks, suspicious subdomains, URL shorteners, 
-mismatched TLDs, excessive hyphens, IP addresses instead of domains, deceptive paths, 
+Analyse for: typosquatting, homograph attacks, suspicious subdomains, URL shorteners,
+mismatched TLDs, excessive hyphens, IP addresses instead of domains, deceptive paths,
 punycode, and other common phishing techniques.`
 
-  const raw = await claudeCall(prompt, 500)
+  const raw = await groqCall(prompt, 500)
   try { return JSON.parse(raw) } catch { return null }
 }
 
@@ -106,6 +106,6 @@ Return ONLY a JSON object, no markdown:
   "recommendation": <urgent one-sentence action>
 }`
 
-  const raw = await claudeCall(prompt, 500)
+  const raw = await groqCall(prompt, 500)
   try { return JSON.parse(raw) } catch { return null }
 }
