@@ -2,10 +2,19 @@ import { useState } from 'react'
 import { analysePassword } from '../services/claude'
 import styles from './PasswordChecker.module.css'
 
+const SCAN_STEPS = [
+  'Initialising entropy analysis...',
+  'Checking against known breach patterns...',
+  'Running dictionary attack simulation...',
+  'Calculating crack time estimate...',
+  'Generating security report...',
+]
+
 export default function PasswordChecker() {
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [scanStep, setScanStep] = useState(0)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
 
@@ -14,14 +23,26 @@ export default function PasswordChecker() {
     setLoading(true)
     setResult(null)
     setError('')
+    setScanStep(0)
+
+    // Animate through steps
+    SCAN_STEPS.forEach((_, i) => {
+      setTimeout(() => setScanStep(i), i * 400)
+    })
+
     try {
       const data = await analysePassword(password)
-      if (data) setResult(data)
-      else setError('Analysis failed. Try again.')
+      setTimeout(() => {
+        if (data) setResult(data)
+        else setError('Analysis failed. Try again.')
+        setLoading(false)
+      }, SCAN_STEPS.length * 400)
     } catch {
-      setError('Could not reach AI service.')
+      setTimeout(() => {
+        setError('Could not reach AI service.')
+        setLoading(false)
+      }, SCAN_STEPS.length * 400)
     }
-    setLoading(false)
   }
 
   const scoreColor = result
@@ -49,18 +70,37 @@ export default function PasswordChecker() {
           </button>
         </div>
         <button className={styles.analyseBtn} onClick={handleCheck} disabled={loading || !password.trim()}>
-          {loading ? '...' : 'Analyse →'}
+          {loading ? 'Scanning...' : 'Analyse →'}
         </button>
       </div>
 
-      {error && <div className={styles.error}>{error}</div>}
-
       {loading && (
-        <div className={styles.loading}>
-          <span className={styles.loadingDot} />
-          AI analysing password strength...
+        <div className={styles.scanBox}>
+          <div className={styles.scanHeader}>
+            <span className={styles.scanPulse} />
+            Analysing password...
+          </div>
+          {SCAN_STEPS.map((step, i) => (
+            <div
+              key={i}
+              className={`${styles.scanLine} ${i <= scanStep ? styles.scanLineVisible : ''} ${i === scanStep ? styles.scanLineActive : ''}`}
+            >
+              <span className={styles.scanPrompt}>{'>'}</span>
+              <span>{step}</span>
+              {i < scanStep && <span className={styles.scanOk}>✓</span>}
+              {i === scanStep && <span className={styles.scanCursor} />}
+            </div>
+          ))}
+          <div className={styles.scanProgress}>
+            <div
+              className={styles.scanProgressFill}
+              style={{ width: `${((scanStep + 1) / SCAN_STEPS.length) * 100}%` }}
+            />
+          </div>
         </div>
       )}
+
+      {error && <div className={styles.error}>{error}</div>}
 
       {result && (
         <div className={styles.result}>

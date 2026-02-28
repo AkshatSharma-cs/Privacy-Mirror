@@ -84,12 +84,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   position: relative;
 }
 
 .dot:hover {
-  transform: scale(1.3);
+  transform: scale(1.4);
+  box-shadow: 0 0 16px currentColor;
 }
 
 .dotInner {
@@ -111,8 +112,8 @@
   border-radius: 4px;
   padding: 12px 14px;
   z-index: 20;
-  animation: fadeUp 0.2s ease forwards;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  animation: revealUp 0.25s cubic-bezier(0.16,1,0.3,1) forwards;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
 }
 
 /* Ensure popup on last items doesn't go off-screen */
@@ -172,8 +173,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--text-dim);
-  animation: pulse-red 2s ease infinite;
+  background: var(--green);
+  animation: glowPulse 1.5s ease infinite;
 }
 
 .nowLabel {

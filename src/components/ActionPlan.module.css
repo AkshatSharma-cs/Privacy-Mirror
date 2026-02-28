@@ -4,21 +4,20 @@
   gap: 8px;
 }
 
-.item {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
+.card {
   background: var(--surface);
   border: 1px solid var(--border2);
+  border-left: 3px solid var(--red);
   border-radius: 3px;
-  padding: 14px 18px;
-  animation: fadeUp 0.4s ease both;
-  transition: border-color 0.2s, background 0.2s;
+  padding: 14px 16px;
+  animation: slideInLeft 0.5s ease both;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
-.item:hover {
-  border-color: var(--green);
-  background: var(--surface2);
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  border-color: var(--orange);
 }
 
 .num {

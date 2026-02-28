@@ -1,22 +1,22 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg:         #04080f;
-  --bg2:        #080e18;
-  --surface:    #0b1220;
-  --surface2:   #0f1828;
-  --border:     #152030;
-  --border2:    #1e3045;
-  --red:        #ff2d55;
-  --red-dim:    rgba(255,45,85,0.12);
-  --orange:     #ff6b35;
-  --yellow:     #ffc847;
-  --green:      #00e676;
-  --green-dim:  rgba(0,230,118,0.08);
-  --cyan:       #00bcd4;
-  --text:       #c0d4e8;
-  --text-dim:   #607080;
-  --white:      #eef4fa;
+  --bg:         #0E141B;
+  --bg2:        #111920;
+  --surface:    #16212B;
+  --surface2:   #1a2a38;
+  --border:     #1e2e3d;
+  --border2:    #243647;
+  --red:        #FF4C4C;
+  --red-dim:    rgba(255,76,76,0.12);
+  --orange:     #FFB020;
+  --yellow:     #FFB020;
+  --green:      #00C2A8;
+  --green-dim:  rgba(0,194,168,0.08);
+  --cyan:       #4DA3FF;
+  --text:       #D1E3F0;
+  --text-dim:   #5a7a94;
+  --white:      #EEF6FF;
   --mono:       'Share Tech Mono', monospace;
   --sans:       'Barlow', sans-serif;
   --cond:       'Barlow Condensed', sans-serif;
@@ -33,7 +33,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scanline overlay */
 body::before {
   content: '';
   position: fixed; inset: 0;
@@ -41,19 +40,17 @@ body::before {
     0deg,
     transparent,
     transparent 3px,
-    rgba(0, 230, 118, 0.008) 3px,
-    rgba(0, 230, 118, 0.008) 4px
+    rgba(0, 194, 168, 0.006) 3px,
+    rgba(0, 194, 168, 0.006) 4px
   );
   pointer-events: none;
   z-index: 9999;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-/* Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -69,8 +66,8 @@ body::before {
 }
 
 @keyframes pulse-red {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,45,85,0); }
-  50%       { box-shadow: 0 0 0 8px rgba(255,45,85,0.15); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,76,76,0); }
+  50%       { box-shadow: 0 0 0 8px rgba(255,76,76,0.15); }
 }
 
 @keyframes scan-sweep {
@@ -88,10 +85,74 @@ body::before {
   80%  { clip-path: inset(10% 0 70% 0); transform: translate(0, 0); }
   100% { clip-path: inset(0 0 95% 0);   transform: translate(0, 0); }
 }
+@keyframes matrixRain {
+  0%   { transform: translateY(-100%); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
 
-@keyframes count-up {
-  from { opacity: 0.3; }
-  to   { opacity: 1; }
+@keyframes borderPulse {
+  0%, 100% { border-color: var(--border2); }
+  50%       { border-color: var(--green); box-shadow: 0 0 12px rgba(0,194,168,0.2); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes numberFlicker {
+  0%  { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.4; }
+  94% { opacity: 1; }
+  96% { opacity: 0.6; }
+  97% { opacity: 1; }
+}
+
+@keyframes scanLine {
+  0%   { top: -2px; }
+  100% { top: 100%; }
+}
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(40px); clip-path: inset(100% 0 0 0); }
+  to   { opacity: 1; transform: translateY(0);    clip-path: inset(0% 0 0 0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0px rgba(0,194,168,0); }
+  50%       { box-shadow: 0 0 20px rgba(0,194,168,0.3), 0 0 40px rgba(0,194,168,0.1); }
+}
+
+@keyframes criticalPulse {
+  0%, 100% { box-shadow: 0 0 0px rgba(255,76,76,0); }
+  50%       { box-shadow: 0 0 20px rgba(255,76,76,0.4), 0 0 40px rgba(255,76,76,0.15); }
+}
+
+@keyframes typewriterCursor {
+  0%, 100% { border-right-color: var(--green); }
+  50%       { border-right-color: transparent; }
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes dashDraw {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
 }
 
 .animate-fade-up { animation: fadeUp 0.5s ease forwards; }

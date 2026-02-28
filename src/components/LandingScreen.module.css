@@ -9,6 +9,14 @@
   overflow: hidden;
 }
 
+.wrap::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0,194,168,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
 /* Perspective grid background */
 .grid {
   position: fixed;
@@ -24,16 +32,14 @@
 .header {
   text-align: center;
   margin-bottom: 52px;
-  animation: fadeUp 0.7s ease forwards;
+  animation: revealUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
 }
-
 .eyebrow {
   font-family: var(--mono);
-  font-size: 11px;
-  color: var(--green);
+  font-size: 16px;
+  color: #ffffff;
   letter-spacing: 0.2em;
   margin-bottom: 20px;
-  opacity: 0.7;
 }
 
 .title {
@@ -49,6 +55,7 @@
   font-size: clamp(72px, 14vw, 140px);
   font-weight: 900;
   color: var(--white);
+  animation: numberFlicker 4s ease 2s infinite;
 }
 
 .titleAccent {
@@ -89,15 +96,15 @@
   width: 100%;
   max-width: 560px;
   margin-bottom: 36px;
-  animation: fadeUp 0.7s ease 0.15s both;
+  animation: slideInLeft 0.7s ease 0.3s both;
 }
 
 .label {
   display: block;
   font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-dim);
-  letter-spacing: 0.2em;
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
@@ -129,26 +136,28 @@
 .input::placeholder { color: var(--text-dim); }
 
 .btn {
-  background: var(--red);
+  background: var(--green);
   border: none;
   border-radius: 3px;
   padding: 16px 28px;
   font-family: var(--cond);
   font-size: 16px;
   font-weight: 700;
-  color: #fff;
+  color: #0E141B;
   cursor: pointer;
   letter-spacing: 0.12em;
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: background 0.15s, transform 0.15s;
+  transition: background 0.15s, transform 0.2s, box-shadow 0.2s;
   white-space: nowrap;
+  animation: glowPulse 3s ease infinite;
 }
 
 .btn:hover:not(:disabled) {
-  background: #e6002a;
-  transform: translateY(-1px);
+  background: #00a891;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,194,168,0.4);
 }
 
 .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
@@ -172,9 +181,9 @@
 
 .demoPanelHeader {
   font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-dim);
-  letter-spacing: 0.2em;
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0.15em;
   margin-bottom: 14px;
 }
 
