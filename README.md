@@ -4,6 +4,8 @@
 
 Privacy Mirror is an AI-powered digital footprint reconstruction tool. Enter an email address and watch AI rebuild your digital identity in real time — exposing breach history, dark web presence, threat vectors, and a personality profile inferred from your leaked data.
 
+🔗 **Live Demo:** [privacy-mirror.vercel.app](https://privacy-mirror.vercel.app)
+
 ---
 
 ## What It Does
@@ -13,13 +15,14 @@ Most people have no idea how much of their personal data is publicly available, 
 ### Features
 
 - **Creepy Score** — A 0–100 exposure rating calculated from breach count, data types leaked, and severity
-- **Breach Detection** — Identifies exposure across 160+ real services including LinkedIn, Facebook, Zomato, Domino's India, JusPay, AT&T, 23andMe, and more
+- **Breach Detection** — Identifies exposure across 160+ real services including LinkedIn, Facebook, Zomato, Domino's India, JusPay, AT&T, 23andMe, Ashley Madison, and more
 - **Breach Timeline** — Interactive visual history of when your data was exposed over the years
-- **AI Personality Profiler** — AI infers your age range, profession, interests, and lifestyle from your breach metadata. The "wow" moment.
+- **AI Personality Profiler** — AI infers your age range, profession, interests, and lifestyle from your breach metadata in real time
 - **Dark Web Threat Intelligence** — AI estimates dark web mention count, whether your data is actively for sale, its market price, and active threat vectors targeting your profile
 - **AI Password Analyser** — Real-time AI analysis of password strength, entropy, crack time, and specific improvement suggestions
 - **AI Phishing URL Detector** — Paste any suspicious link and AI checks for typosquatting, homograph attacks, deceptive subdomains, and social engineering techniques
 - **Remediation Plan** — Personalised action steps tailored to the specific breaches found
+- **Email Validation** — Rejects invalid input before scanning
 
 ---
 
@@ -31,13 +34,34 @@ Most people have no idea how much of their personal data is publicly available, 
 | Styling | CSS Modules |
 | Backend Proxy | Node.js + Express |
 | AI Model | Llama 3.3 70B via Groq API (see note below) |
+| Frontend Hosting | Vercel |
+| Backend Hosting | Render |
 | Breach Data | Curated dataset of 160+ real-world breaches |
 
 ### A Note on the AI Model
 
 This project was built for the AMD Slingshot Hackathon where compute resources are limited during development. We are using **Llama 3.3 70B via Groq** as it offers a free tier suitable for hackathon prototyping.
 
-**In production, this would run on `claude-sonnet-4-6` (Anthropic).** Claude Sonnet produces significantly more nuanced personality profiles, more accurate threat intelligence, and better-calibrated password analysis. The architecture is designed for a one-line swap — just change the API endpoint and model name in `src/services/claude.js`. The AMD Instinct MI300X would handle self-hosted LLaMA inference at scale, delivering the sub-2 second response times the product requires.
+**In production, this would run on `claude-sonnet-4-6` (Anthropic).** Claude Sonnet produces significantly more nuanced personality profiles, more accurate threat intelligence, and better-calibrated password analysis. The architecture is designed for a one-line swap — just change the API endpoint and model name in `src/services/claude.js`. The AMD Instinct MI300X would handle self-hosted LLM inference at scale, delivering the sub-2 second response times the product requires.
+
+---
+
+## What We Tried
+
+### HaveIBeenPwned API Integration
+We attempted to integrate the [HaveIBeenPwned](https://haveibeenpwned.com/API/v3) API for real-time breach lookups. The backend proxy route was built and tested successfully:
+
+```
+GET /api/breach/:email
+→ https://haveibeenpwned.com/api/v3/breachedaccount/{email}
+```
+
+However we ran into two blockers for the hackathon:
+
+1. **Paid API key required** — HaveIBeenPwned charges $3.50/month with no free tier
+2. **Rate limiting** — The API enforces a 1 request per 1500ms limit which would cause failures during a live demo with multiple emails
+
+We made the decision to use a curated hardcoded breach dataset of 160+ real services instead, which guarantees reliable and dramatic results on stage. In production, the HIBP integration is ready to enable with just an API key.
 
 ---
 
@@ -57,7 +81,7 @@ privacy-mirror/
 │   ├── hooks/
 │   │   └── useTyping.js       # Reusable typewriter animation hook
 │   └── components/
-│       ├── LandingScreen      # Email input and landing page
+│       ├── LandingScreen      # Email input with validation
 │       ├── ScanScreen         # Animated terminal scan sequence
 │       ├── ResultsScreen      # Tabbed results layout
 │       ├── CreepyScore        # Animated SVG ring gauge
@@ -77,7 +101,7 @@ privacy-mirror/
 ### Prerequisites
 
 - Node.js v18+
-- A Groq API key (free at [console.groq.com](https://console.groq.com))
+- A Groq API key — free at [console.groq.com](https://console.groq.com)
 
 ### Installation
 
@@ -93,7 +117,7 @@ npm install
 echo "GROQ_API_KEY=your-key-here" > .env
 ```
 
-### Running the App
+### Running Locally
 
 You need two terminals running simultaneously:
 
@@ -126,7 +150,7 @@ These emails are hardcoded with dramatic results for live demos:
 | `sarah.jones@hotmail.com` | 91 | Critical |
 | `mike.wilson@yahoo.com` | 97 | Critical |
 
-Any other email generates a randomised result drawn from the 160+ breach pool.
+Any other valid email generates a randomised result drawn from the 160+ breach pool.
 
 ---
 
@@ -134,38 +158,34 @@ Any other email generates a randomised result drawn from the 160+ breach pool.
 
 Four separate AI calls power the product:
 
-1. **Profile Generation** — Breach metadata is fed into the LLM which infers demographic and behavioural patterns
+1. **Profile Generation** — Breach metadata is fed into the LLM which infers demographic and behavioural patterns unique to each scan
 2. **Threat Intelligence** — LLM estimates dark web exposure, market value of the data bundle, and active threat vectors
-3. **Password Analysis** — LLM calculates entropy, crack time, and specific weaknesses for any password
+3. **Password Analysis** — LLM calculates entropy, crack time, and specific weaknesses for any password entered
 4. **Phishing Detection** — LLM analyses URL structure for typosquatting, homograph attacks, suspicious subdomains, and social engineering patterns
 
-All AI calls are proxied through a local Express server to keep API keys off the client.
+All AI calls are proxied through a backend Express server to keep API keys off the client.
 
 ---
 
-## What We Tried
+## Deployment
 
-### HaveIBeenPwned API Integration
-We attempted to integrate the [HaveIBeenPwned](https://haveibeenpwned.com/API/v3) API for real-time breach lookups. The backend proxy route was built and tested successfully:
-```javascript
-GET /api/breach/:email
-→ https://haveibeenpwned.com/api/v3/breachedaccount/{email}
-```
+| Service | Platform | URL |
+|---|---|---|
+| Frontend | Vercel | Auto-deploys on push to main |
+| Backend | Render (free tier) | Auto-deploys on push to main |
 
-However we ran into two blockers for the hackathon:
+Note: Render's free tier spins down after 15 minutes of inactivity. The first request after idle takes ~30 seconds to wake up. Open the app a couple of minutes before any live demo.
 
-1. **Paid API key required** — HaveIBeenPwned charges $3.50/month with no free tier
-2. **Rate limiting** — The API enforces a 1 request per 1500ms limit which would cause failures during a live demo with multiple emails
-
-We made the decision to use a curated hardcoded breach dataset of 160+ real services instead, which guarantees reliable and dramatic results on stage. In production, the HIBP integration is ready to enable with just an API key.
+---
 
 ## Roadmap
 
 - [ ] Swap Groq/Llama for Claude Sonnet on AMD MI300X infrastructure
 - [ ] Enable HaveIBeenPwned API with paid key for live breach lookups
 - [ ] Add data broker opt-out automation
-- [ ] Email monitoring with breach alerts
+- [ ] Email monitoring with real-time breach alerts
 - [ ] Browser extension for real-time phishing detection
+- [ ] Mobile app
 
 ---
 
