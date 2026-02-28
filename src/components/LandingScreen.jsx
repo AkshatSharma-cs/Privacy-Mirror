@@ -20,7 +20,7 @@ export default function LandingScreen({ onScan }) {
       <div className={styles.grid} />
 
       <header className={styles.header}>
-        <div className={styles.eyebrow}>// AMD Slingshot · AI + Cybersecurity</div>
+        <div className={styles.eyebrow}>AMD Slingshot · AI + Cybersecurity</div>
         <h1 className={styles.title}>
           <span className={styles.titleMain}>PRIVACY</span>
           <span className={styles.titleAccent}>MIRROR</span>
@@ -31,7 +31,7 @@ export default function LandingScreen({ onScan }) {
       </header>
 
       <div className={styles.inputBlock}>
-        <label className={styles.label}>// Target email address</label>
+        <label className={styles.label}>Target email address</label>
         <div className={styles.inputRow}>
           <input
             className={styles.input}
@@ -51,7 +51,7 @@ export default function LandingScreen({ onScan }) {
       </div>
 
       <div className={styles.demoPanel}>
-        <div className={styles.demoPanelHeader}>// Demo profiles</div>
+        <div className={styles.demoPanelHeader}>Try these emails</div>
         <div className={styles.demoGroup}>
           <div className={styles.demoGroupLabel} data-risk="low">LOW RISK</div>
           <div className={styles.demoEmails}>

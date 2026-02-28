@@ -56,7 +56,7 @@ export default function CreepyScore({ score, label, color, headline }) {
       </div>
 
       <div className={styles.info}>
-        <h2 className={styles.headline}>{headline}</h2>
+        <h2 className={styles.headline} style={{ color }}>{headline}</h2>
         <p className={styles.sub}>
           Your digital footprint is being aggregated, sold, and cross-referenced across data broker networks and dark web marketplaces right now.
         </p>

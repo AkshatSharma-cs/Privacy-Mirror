@@ -13,35 +13,96 @@
 }
 
 .stat {
-  background: var(--bg2); border: 1px solid var(--border2); border-radius: 3px;
-  padding: 14px 16px; display: flex; flex-direction: column; gap: 4px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: fadeUp 0.5s ease both;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.statNum { font-family: var(--cond); font-size: 28px; font-weight: 900; line-height: 1; }
+
+.stat:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 16px rgba(77,163,255,0.15);
+}
+.statNum {
+  font-family: var(--cond);
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  animation: numberFlicker 6s ease 2s infinite;
+}
 .statLabel { font-family: var(--mono); font-size: 9px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; }
 
 .section { display: flex; flex-direction: column; gap: 8px; }
-.sectionLabel { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.18em; margin-bottom: 2px; }
+.sectionLabel {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
 
 .threat {
-  background: var(--bg2); border: 1px solid var(--border2); border-left: 2px solid var(--red);
-  border-radius: 3px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-left: 2px solid var(--red);
+  border-radius: 3px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: slideInLeft 0.4s ease both;
+  transition: box-shadow 0.3s;
+}
+
+.threat:hover {
+  box-shadow: 0 0 20px rgba(255,76,76,0.15);
 }
 .threatHeader { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .threatType { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--white); }
 .threatLikelihood { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-.threatDetail { font-family: var(--mono); font-size: 11px; color: var(--text-dim); line-height: 1.7; }
+.threatDetail {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.7;
+}
 
 .serviceList { display: flex; flex-wrap: wrap; gap: 6px; }
 .serviceTag {
-  font-family: var(--mono); font-size: 10px; color: var(--orange);
-  background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.2);
-  padding: 3px 8px; border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--orange);
+  background: rgba(255,107,53,0.15);
+  border: 1px solid rgba(255,107,53,0.4);
+  padding: 3px 8px;
+  border-radius: 2px;
 }
 
 .urgent {
-  display: flex; gap: 10px; align-items: flex-start;
-  background: rgba(255,45,85,0.06); border: 1px solid rgba(255,45,85,0.2);
-  border-radius: 3px; padding: 12px 14px;
-  font-family: var(--mono); font-size: 12px; color: var(--text); line-height: 1.7;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: rgba(255,76,76,0.08);
+  border: 1px solid rgba(255,76,76,0.4);
+  border-radius: 3px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--red);
+  line-height: 1.7;
+  font-weight: 700;
+  animation: criticalPulse 2.5s ease infinite;
 }
-.urgentIcon { color: var(--red); flex-shrink: 0; font-size: 14px; }
+
+.urgentIcon {
+  color: var(--red);
+  flex-shrink: 0;
+  font-size: 16px;
+}

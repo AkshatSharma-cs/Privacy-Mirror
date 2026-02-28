@@ -12,14 +12,19 @@
 .sweepLine {
   position: fixed;
   left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, var(--green) 40%, var(--cyan) 60%, transparent 100%);
-  opacity: 0.6;
-  animation: scan-sweep 2s linear infinite;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--green) 20%, 
+    rgba(0,194,168,0.8) 50%, 
+    var(--cyan) 80%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 20px rgba(0,194,168,0.8), 0 0 40px rgba(0,194,168,0.3);
+  animation: scan-sweep 1.8s cubic-bezier(0.4,0,0.6,1) infinite;
   pointer-events: none;
   z-index: 10;
 }
-
 .header {
   text-align: center;
   margin-bottom: 40px;
@@ -49,8 +54,19 @@
   border-radius: 4px;
   padding: 24px 28px;
   margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  animation: glowPulse 2s ease infinite;
 }
 
+.terminal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  animation: scan-sweep 3s linear infinite;
+}
 .line {
   display: flex;
   align-items: center;
@@ -59,18 +75,12 @@
   font-size: 12px;
   line-height: 2.2;
   opacity: 0;
-  transform: translateX(-8px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateX(-12px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.lineVisible {
-  opacity: 0.4;
-  transform: translateX(0);
-}
-
-.lineActive {
-  opacity: 1;
-}
+.lineVisible { opacity: 0.45; transform: translateX(0); }
+.lineActive  { opacity: 1;    transform: translateX(0); }
 
 .prompt {
   color: var(--green);
@@ -121,10 +131,20 @@
 
 .progressBar {
   height: 100%;
+  border-radius: 2px;
   background: linear-gradient(90deg, var(--green), var(--cyan));
-  border-radius: 1px;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 8px rgba(0,230,118,0.5);
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 12px rgba(0,194,168,0.7), 0 0 24px rgba(0,194,168,0.3);
+  position: relative;
+}
+
+.progressBar::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 20px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+  border-radius: 2px;
 }
 
 .progressLabel {
