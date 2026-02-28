@@ -1,7 +1,7 @@
 const MODEL = 'llama-3.3-70b-versatile'
 
 async function groqCall(prompt, maxTokens = 600) {
-  const res = await fetch('https://privacy-mirror.onrender.com', {
+  const res = await fetch("https://privacy-mirror.onrender.com/api/claude", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
