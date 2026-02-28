@@ -6,13 +6,22 @@ const HIGH_EMAILS = ['john.smith@gmail.com', 'sarah.jones@hotmail.com', 'mike.wi
 
 export default function LandingScreen({ onScan }) {
   const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
 
   function handleScan() {
-    if (email.trim()) onScan(email.trim().toLowerCase())
+    const trimmed = email.trim().toLowerCase()
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(trimmed)) {
+      setError('Please enter a valid email address.')
+      return
+    }
+    setError('')
+    onScan(trimmed)
   }
 
   function fillEmail(e) {
     setEmail(e)
+    setError('')
   }
 
   return (
@@ -34,11 +43,11 @@ export default function LandingScreen({ onScan }) {
         <label className={styles.label}>Target email address</label>
         <div className={styles.inputRow}>
           <input
-            className={styles.input}
+            className={`${styles.input} ${error ? styles.inputError : ''}`}
             type="email"
             placeholder="you@example.com"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => { setEmail(e.target.value); setError('') }}
             onKeyDown={e => e.key === 'Enter' && handleScan()}
             autoFocus
             spellCheck={false}
@@ -48,6 +57,7 @@ export default function LandingScreen({ onScan }) {
             <span className={styles.btnArrow}>→</span>
           </button>
         </div>
+        {error && <div className={styles.error}>{error}</div>}
       </div>
 
       <div className={styles.demoPanel}>
