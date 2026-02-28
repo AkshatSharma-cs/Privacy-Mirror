@@ -1,3 +1,5 @@
 "node_modules\ndist\n.env" 
 .env
 ".env" 
+node_modules
+dist
