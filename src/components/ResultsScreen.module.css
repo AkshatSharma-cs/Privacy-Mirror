@@ -69,7 +69,7 @@
   font-family: var(--sans);
   font-size: 13px;
   font-weight: 700;
-  color: var(--cyan);
+  color: var(--text);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -79,9 +79,15 @@
   color: rgba(255,255,255,0.5);
 }
 .toolNote {
-  font-family: var(--mono); font-size: 12px; color: var(--text-dim);
-  line-height: 1.7; padding: 12px 16px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.7;
+  padding: 12px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--cyan);
+  border-radius: 3px;
 }
 
 .divider { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
@@ -108,4 +114,4 @@
 }
 .resetBtn2:hover { border-color: var(--green); color: var(--green); }
 
-.footerNote { font-family: var(--mono); font-size: 10px; color: var(--text-dim); opacity: 0.35; letter-spacing: 0.1em; }
+.footerNote { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; }

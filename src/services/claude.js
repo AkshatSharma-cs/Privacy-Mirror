@@ -89,21 +89,22 @@ punycode, and other common phishing techniques.`
 // ── Dark Web Threat Intelligence ─────────────────────────────────────────────
 export async function generateThreatIntel(email, breaches) {
   const breachNames = breaches.map(b => b.name).join(', ') || 'none'
-  const prompt = `You are a dark web threat intelligence analyst for a cybersecurity demo tool.
+   const prompt = `You are a dark web threat intelligence analyst for a cybersecurity demo tool.
 
 Email: ${email}
 Known breaches: ${breachNames}
+Number of breaches: ${breaches.length}
 
 Return ONLY a JSON object, no markdown:
 {
-  "darkWebMentions": <plausible number 0-50 based on breach severity>,
-  "dataForSale": <true/false based on breach types>,
-  "estimatedDataPrice": <e.g. "$12.50" — what this data bundle sells for on dark web markets>,
+  "darkWebMentions": <number 0-50, scale with breach count and severity — 0-5 for clean, 5-15 for low, 15-35 for medium/high, 35-50 for critical breaches>,
+  "dataForSale": <true if any breach contains Card, SSN, Password, DOB, Health, Passport or Financial data — otherwise false>,
+  "estimatedDataPrice": <realistic dark web market price as a string e.g. "$2.30" for basic email only, "$8.50" for email+password, "$25.00" for email+DOB+address, "$75.00" for card data, "$150.00" for SSN or health records, "$300.00+" for full identity with passport — scale based on the actual data types exposed across all breaches>,
   "activeThreats": [
-    { "type": <threat type e.g. "Credential Stuffing">, "likelihood": <"Low"|"Medium"|"High"|"Critical">, "detail": <one sentence> }
+    { "type": <specific threat type>, "likelihood": <"Low"|"Medium"|"High"|"Critical">, "detail": <one sentence referencing the actual breach names> }
   ],
-  "compromisedServices": [<list of specific service types likely still using leaked credentials>],
-  "recommendation": <urgent one-sentence action>
+  "compromisedServices": [<list of specific service types still likely using leaked credentials>],
+  "recommendation": <urgent one-sentence action tailored to the specific breaches found>
 }`
 
   const raw = await groqCall(prompt, 500)

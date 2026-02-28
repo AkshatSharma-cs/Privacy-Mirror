@@ -3,36 +3,118 @@
 .inputRow { display: flex; gap: 10px; }
 
 .input {
-  flex: 1; background: var(--bg2); border: 1px solid var(--border2); border-radius: 3px;
-  padding: 12px 16px; font-family: var(--mono); font-size: 13px; color: var(--white);
-  outline: none; transition: border-color 0.2s; caret-color: var(--green);
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 12px 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+  caret-color: var(--green);
 }
-.input:focus { border-color: rgba(0,230,118,0.3); }
+.input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px rgba(0,194,168,0.12);
+}
 .input::placeholder { color: var(--text-dim); }
 
 .btn {
-  background: var(--surface2); border: 1px solid var(--border2); border-radius: 3px;
-  padding: 12px 20px; font-family: var(--mono); font-size: 12px; color: var(--text);
-  cursor: pointer; white-space: nowrap; transition: all 0.15s; letter-spacing: 0.05em;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 12px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  letter-spacing: 0.05em;
 }
-.btn:hover:not(:disabled) { border-color: var(--cyan); color: var(--cyan); }
+.btn:hover:not(:disabled) { border-color: var(--green); color: var(--green); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+
 .examples {
-  font-family: var(--mono); font-size: 10px; color: var(--text-dim);
-  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 .examples span {
-  color: var(--cyan); cursor: pointer; text-decoration: underline;
-  text-decoration-color: rgba(0,188,212,0.3);
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(209,227,240,0.2);
 }
-.examples span:hover { text-decoration-color: var(--cyan); }
+.examples span:hover { color: var(--green); text-decoration-color: var(--green); }
 
-.loading {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--mono); font-size: 12px; color: var(--text-dim);
+/* Scan animation */
+.scanBox {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 4px; padding: 20px 24px;
+  animation: fadeUp 0.3s ease forwards;
 }
-.loadingDot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: blink 0.8s step-end infinite; }
+
+.scanHeader {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 12px; color: var(--cyan);
+  margin-bottom: 10px; font-weight: 700; letter-spacing: 0.1em;
+}
+
+.scanPulse {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--cyan);
+  flex-shrink: 0; animation: scanPulseAnim 1s ease infinite;
+}
+
+@keyframes scanPulseAnim {
+  0%   { box-shadow: 0 0 0 0 rgba(77,163,255,0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(77,163,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(77,163,255,0); }
+}
+
+.urlPreview {
+  font-family: var(--mono); font-size: 11px; color: var(--cyan);
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 2px; padding: 6px 12px; margin-bottom: 14px;
+  word-break: break-all; opacity: 0.8;
+}
+
+.scanLine {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 12px; line-height: 2.2;
+  opacity: 0; transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  color: var(--text-dim);
+}
+.scanLineVisible { opacity: 0.5; transform: translateX(0); }
+.scanLineActive  { opacity: 1; color: var(--text); }
+
+.scanPrompt { color: var(--cyan); flex-shrink: 0; }
+.scanOk { color: var(--green); font-size: 11px; margin-left: auto; opacity: 0.7; }
+.scanCursor {
+  display: inline-block; width: 7px; height: 13px;
+  background: var(--cyan); margin-left: 4px;
+  animation: blink 0.9s step-end infinite;
+}
+
+.scanProgress {
+  height: 2px; background: var(--border2); border-radius: 1px;
+  overflow: hidden; margin-top: 16px;
+}
+.scanProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  border-radius: 1px;
+  transition: width 0.35s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 8px rgba(77,163,255,0.5);
+}
 
 .error { font-family: var(--mono); font-size: 12px; color: var(--red); }
 
@@ -44,19 +126,22 @@
   border-left: 3px solid; border-radius: 3px; padding: 16px 18px;
 }
 
-.verdictScore {
-  font-family: var(--cond); font-size: 42px; font-weight: 900;
-  line-height: 1; flex-shrink: 0;
-}
+.verdictScore { font-family: var(--cond); font-size: 42px; font-weight: 900; line-height: 1; flex-shrink: 0; }
 .verdictSlash { font-size: 16px; color: var(--text-dim); }
-
 .verdictLabel { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
 .impersonating { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-bottom: 4px; }
 .impersonating strong { color: var(--text); }
-.recommendation { font-family: var(--mono); font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+.recommendation { font-family: var(--mono); font-size: 11px; color: var(--text); line-height: 1.6; }
 
 .indicators { display: flex; flex-direction: column; gap: 6px; }
-.indicatorsLabel { font-family: var(--mono); font-size: 9px; color: var(--text-dim); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px; }
+.indicatorsLabel {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
 .indicator { display: flex; gap: 10px; font-family: var(--mono); font-size: 12px; align-items: baseline; }
 .indicatorFlag { flex-shrink: 0; font-weight: 700; }
-.indicatorDetail { color: var(--text-dim); line-height: 1.6; }
+.indicatorDetail { color: var(--text); line-height: 1.6; }

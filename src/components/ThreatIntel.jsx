@@ -63,7 +63,7 @@ export default function ThreatIntel({ email, breaches }) {
       {/* Active threats */}
       {data.activeThreats?.length > 0 && (
         <div className={styles.section}>
-          <div className={styles.sectionLabel}>// Active threat vectors</div>
+          <div className={styles.sectionLabel}>Active threat vectors</div>
           {data.activeThreats.map((t, i) => (
             <div key={i} className={styles.threat}>
               <div className={styles.threatHeader}>
@@ -81,7 +81,7 @@ export default function ThreatIntel({ email, breaches }) {
       {/* Compromised services */}
       {data.compromisedServices?.length > 0 && (
         <div className={styles.section}>
-          <div className={styles.sectionLabel}>// Services at risk from credential reuse</div>
+          <div className={styles.sectionLabel}>Services at risk from credential reuse</div>
           <div className={styles.serviceList}>
             {data.compromisedServices.map((s, i) => (
               <span key={i} className={styles.serviceTag}>{s}</span>

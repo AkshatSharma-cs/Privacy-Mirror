@@ -32,7 +32,7 @@ export default function ScanScreen({ email }) {
       <div className={styles.sweepLine} />
 
       <div className={styles.header}>
-        <div className={styles.label}>// Scanning</div>
+        <div className={styles.label}>Scanning</div>
         <div className={styles.target}>{email}</div>
       </div>
 

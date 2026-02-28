@@ -4,9 +4,19 @@ import styles from './PhishingDetector.module.css'
 
 const SEVERITY_COLOR = { low: 'var(--text-dim)', medium: 'var(--yellow)', high: 'var(--red)' }
 
+const SCAN_STEPS = [
+  'Parsing URL structure...',
+  'Checking domain reputation...',
+  'Analysing for typosquatting...',
+  'Scanning for homograph attacks...',
+  'Running phishing pattern match...',
+  'Generating threat verdict...',
+]
+
 export default function PhishingDetector() {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
+  const [scanStep, setScanStep] = useState(0)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
 
@@ -15,14 +25,25 @@ export default function PhishingDetector() {
     setLoading(true)
     setResult(null)
     setError('')
+    setScanStep(0)
+
+    SCAN_STEPS.forEach((_, i) => {
+      setTimeout(() => setScanStep(i), i * 350)
+    })
+
     try {
       const data = await analyseURL(url.trim())
-      if (data) setResult(data)
-      else setError('Analysis failed. Try again.')
+      setTimeout(() => {
+        if (data) setResult(data)
+        else setError('Analysis failed. Try again.')
+        setLoading(false)
+      }, SCAN_STEPS.length * 350)
     } catch {
-      setError('Could not reach AI service.')
+      setTimeout(() => {
+        setError('Could not reach AI service.')
+        setLoading(false)
+      }, SCAN_STEPS.length * 350)
     }
-    setLoading(false)
   }
 
   return (
@@ -38,24 +59,45 @@ export default function PhishingDetector() {
           spellCheck={false}
         />
         <button className={styles.btn} onClick={handleAnalyse} disabled={loading || !url.trim()}>
-          {loading ? '...' : 'Analyse →'}
+          {loading ? 'Scanning...' : 'Analyse →'}
         </button>
       </div>
 
       <div className={styles.examples}>
-        Try: <span onClick={() => setUrl('paypa1-secure-login.com/account/verify')}>paypa1-secure-login.com</span>
+        Try:
+        <span onClick={() => setUrl('paypa1-secure-login.com/account/verify')}>paypa1-secure-login.com</span>
         <span onClick={() => setUrl('https://google.com')}>google.com</span>
         <span onClick={() => setUrl('http://аmazon.com.login-verify.ru/secure')}>аmazon.com.login-verify.ru</span>
       </div>
 
-      {error && <div className={styles.error}>{error}</div>}
-
       {loading && (
-        <div className={styles.loading}>
-          <span className={styles.loadingDot} />
-          AI scanning URL for phishing indicators...
+        <div className={styles.scanBox}>
+          <div className={styles.scanHeader}>
+            <span className={styles.scanPulse} />
+            Scanning URL...
+          </div>
+          <div className={styles.urlPreview}>{url}</div>
+          {SCAN_STEPS.map((step, i) => (
+            <div
+              key={i}
+              className={`${styles.scanLine} ${i <= scanStep ? styles.scanLineVisible : ''} ${i === scanStep ? styles.scanLineActive : ''}`}
+            >
+              <span className={styles.scanPrompt}>{'>'}</span>
+              <span>{step}</span>
+              {i < scanStep && <span className={styles.scanOk}>✓</span>}
+              {i === scanStep && <span className={styles.scanCursor} />}
+            </div>
+          ))}
+          <div className={styles.scanProgress}>
+            <div
+              className={styles.scanProgressFill}
+              style={{ width: `${((scanStep + 1) / SCAN_STEPS.length) * 100}%` }}
+            />
+          </div>
         </div>
       )}
+
+      {error && <div className={styles.error}>{error}</div>}
 
       {result && (
         <div className={styles.result}>
